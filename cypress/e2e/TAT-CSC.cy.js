@@ -125,4 +125,15 @@ describe("TAT Customer Service Center", () => {
         expect($input[0].files[0].name).to.equal("example.json");
       });
   });
+
+  it("verifies that the privacy policy page opens in another tab without the need for a click", () => {
+    cy.contains("a", "Privacy Policy")
+      .should("have.attr", "href", "privacy.html")
+      .and("have.attr", "target", "_blank");
+  });
+
+  it("access the privacy policy page by removing the target, then clicking on the link", () => {
+    cy.contains("a", "Privacy Policy").invoke("removeAttr", "target").click();
+    cy.contains("h1", "TAT CSC - Privacy Policy").should("be.visible");
+  });
 });
